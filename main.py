@@ -78,7 +78,7 @@ def acceptImage(img):
         print("invalid img", err)
         raise InvalidImage
 
-    img.save(inputAbsPath + os.path.sep + "input.jpeg", format="JPEG")
+    img.save(inputAbsPath + os.path.sep + "input." + standardImgFormat, format=standardImgFormat)
 
     # augment the input image and save it to disk
     gd.gen(inputAbsPath, augAbsPath, unaugAbsPath)
@@ -98,7 +98,7 @@ def gatherState():
     
     c3.state["aug_images"] = []
     # r=root, d=directories, f=files
-    for r, d, f in os.walk(thisdir):
+    for r, d, f in os.walk(augAbsPath):
         for file in f:
             if "." + standardImgFormat in file:
                 c3.state["aug_images"].append(readBytesFromFile(os.path.join(r, file)))

@@ -40,15 +40,15 @@ def initState():
         print("c3 is none")
         raise C3Required
 
-    if not os.path.exists(inputRelPath):
-        os.makedirs(inputRelPath)
-    if not os.path.exists(augRelPath):
-        os.makedirs(augRelPath)
-    if not os.path.exists(unaugRelPath):
-        os.makedirs(unaugRelPath)
-    if not os.path.exists(networkRelPath):
-        os.makedirs(networkRelPath)
-        
+    if not os.path.exists(inputAbsPath):
+        os.makedirs(inputAbsPath)
+    if not os.path.exists(augAbsPath):
+        os.makedirs(augAbsPath)
+    if not os.path.exists(unaugAbsPath):
+        os.makedirs(unaugAbsPath)
+    if not os.path.exists(networkAbsPath):
+        os.makedirs(networkAbsPath)
+
     if augImagesKey in c3.state:
         for idx in range(len(c3.state[augImagesKey])):
             b = c3.state[augImagesKey][idx]
@@ -113,8 +113,11 @@ def acceptImage(img):
 
 def gatherState():
     global c3
+    if not networkKey in c3.state:
+        c3.state[networkKey] = bytearray()
+
     c3.state[networkKey] = open(newNetworkAbsPath, "rb+").read()
-    
+
     c3.state[augImagesKey] = []
     # r=root, d=directories, f=files
     for r, d, f in os.walk(augAbsPath):

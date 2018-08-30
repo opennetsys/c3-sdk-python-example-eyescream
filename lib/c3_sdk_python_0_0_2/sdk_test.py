@@ -3,7 +3,7 @@ import unittest
 import sdk
 import json
 
-hexutil = CDLL('./lib/hexutil/hexutil.so')
+hexutil = CDLL('./lib/hexutil.so')
 
 c3 = sdk.NewC3(stateFilePath = './lib/state.json')
 

@@ -26,7 +26,7 @@ WRITE_UNAUG = False
 SCALE = 64
 AUGMENTATIONS = 19
 
-def gen(path, WRITE_AUG_TO, WRITE_UNAUG_TO) 
+def gen(path, WRITE_AUG_TO, WRITE_UNAUG_TO):
     # """gen method that reads the images, augments and saves them."""
     ds = Dataset(path)
     print("Found %d images total." % (len(ds.fps),))

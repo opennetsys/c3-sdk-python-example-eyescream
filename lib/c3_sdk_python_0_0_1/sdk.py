@@ -131,7 +131,7 @@ class C3():
             self.process(self.q.get())
             q.task_done()
 
-    def serve():
+    def serve(self):
         host = c_char_p(config.ServerHost()).value
         port = c_int(config.ServerPort()).value
 
@@ -158,12 +158,12 @@ class Server():
         self.port = port
         self.q = q
 
-    def run():
+    def run(self):
         server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server.bind((self.host, self.port))
         server.listen(1)  # max backlog of connections
 
-        print("Listening on {0}:{1}".format(bind_ip, bind_port))
+        print("Listening on {0}:{1}".format(self.host, self.port))
 
 
         def handle_conn(conn):

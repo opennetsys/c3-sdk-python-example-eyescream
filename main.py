@@ -1,4 +1,4 @@
-from lib.c3_sdk_python_0_0_1 import sdk
+from lib.c3_sdk_python_0_0_2 import sdk
 from lib.eyescream.dataset import generate_dataset as gd
 from PIL import Image
 import io

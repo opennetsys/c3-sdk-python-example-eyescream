@@ -4,6 +4,7 @@
 *.bestnet
 *.bestnet.old
 *.log
+*.pyc
 !test_files/face.jpg
 test_files/network/*
 

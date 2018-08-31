@@ -78,8 +78,8 @@ class C3():
     def setInitialState(self):
         currState = ""
 
-        file = open(self.statefile, "r") 
-        currState = file.read() 
+        with open(self.statefile, "r") as file:
+            currState = file.read() 
 
         if len(currState) == 0:
             print("no current state")

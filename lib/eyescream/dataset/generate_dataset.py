@@ -28,7 +28,7 @@ AUGMENTATIONS = 19
 
 def gen(path, WRITE_AUG_TO, WRITE_UNAUG_TO):
     # """gen method that reads the images, augments and saves them."""
-    ds = Dataset(path)
+    ds = Dataset([path])
     print("Found %d images total." % (len(ds.fps),))
     
     for img_idx, image in enumerate(ds.get_images()):
@@ -348,6 +348,19 @@ def create_aug_matrices(nb_matrices, img_width_px, img_height_px,
         result.append(matrix.inverse)
 
     return result
+
+def is_minmax_tuple(param):
+    """Returns whether the parameter is a tuple containing two values.
+
+    Used in create_aug_matrices() and probably useless everywhere else.
+
+    Args:
+        param: The parameter to check (whether it is a tuple of length 2).
+
+    Returns:
+        Boolean
+    """
+    return type(param) is tuple and len(param) == 2
 
 # if __name__ == "__main__":
     # main()

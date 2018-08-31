@@ -3,12 +3,14 @@ from lib.eyescream.dataset import generate_dataset as gd
 from PIL import Image
 import io
 import os
+import subprocess
 
 c3 = None
 PillowImageRequired = Exception("pillow image is required")
 InvalidImage = Exception("invalid image")
 C3Required = Exception("c3 cannot be None")
 TrainingFailed = Exception("model training failed")
+SubprocessFailed = Exception("subprocess failed")
 standardImgFormat = "JPEG"
 tmpDir = "tmp"
 libDir = "lib"
@@ -62,13 +64,14 @@ def initState():
     writeBytesToFile(network, oldNetworkAbsPath) 
 
 def writeBytesToFile(b, fileName):
-    f = open(fileName, 'wb+')
-    f.write(b)
-    f.close()
+    with open(fileName, 'wb+') as f:
+        f.write(b)
+        f.close()
 
 # http://www.codecodex.com/wiki/Read_a_file_into_a_byte_array#Python
 def readBytesFromFile(filename):
-    return open(filename, "rb+").read()
+    with open(filename, "rb+") as file:
+        return file.read()
 
 def imageFromBytes(b):
     im = Image.open(b)
@@ -87,10 +90,9 @@ def acceptImage(img):
         print("pillow image is required")
         raise PillowImageRequired
 
+    imgCP = img.copy()
     try:
-        if not img.verify():
-            print("image failed to verify")
-            raise InvalidImage
+        imgCP.verify()
 
     except Exception as err:
         print("invalid img", err)
@@ -104,7 +106,14 @@ def acceptImage(img):
     # run an epoch of the model and save the weights
     # note: it's not ideal to run an epoch after each image is added \
     #       but this code is for example purposes, only...
-    result = subprocess.run([scriptFileAbsPath, "--network", oldNetworkAbsPath, "--save", networkAbsPath])
+    result = None
+    try:
+        result = subprocess.run(["th", scriptFileAbsPath, "--network", oldNetworkAbsPath, "--save", networkAbsPath])
+
+    except Exception as err:
+        print("subprocess errored", err)
+        raise SubprocessFailed
+
     if result.returncode != 0:
         print("Preprocess failed: ", result.stderr)
         raise TrainingFailed
@@ -116,7 +125,8 @@ def gatherState():
     if not networkKey in c3.state:
         c3.state[networkKey] = bytearray()
 
-    c3.state[networkKey] = open(newNetworkAbsPath, "rb+").read()
+    with open(newNetworkAbsPath, "rb+") as file:
+        c3.state[networkKey] = file.read()
 
     c3.state[augImagesKey] = []
     # r=root, d=directories, f=files

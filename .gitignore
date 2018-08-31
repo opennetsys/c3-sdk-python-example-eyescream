@@ -4,6 +4,8 @@
 *.bestnet
 *.bestnet.old
 *.log
+!test_files/face.jpg
+test_files/network/*
 
 # Compiled Lua sources
 luac.out

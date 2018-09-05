@@ -115,7 +115,7 @@ def acceptImage(img):
         raise SubprocessFailed
 
     if result.returncode != 0:
-        print("Preprocess failed: ", result.stderr)
+        print("Preprocess failed: ", result.stderr, result)
         raise TrainingFailed
 
     gatherState()

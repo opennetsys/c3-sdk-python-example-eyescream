@@ -6,10 +6,10 @@ require 'pl'
 require 'paths'
 ok, DISP = pcall(require, 'display')
 if not ok then print('display not found. unable to plot') end
-ADVERSARIAL = require 'adversarial'
-DATASET = require 'dataset'
-NN_UTILS = require 'utils.nn_utils'
-MODELS = require 'models'
+ADVERSARIAL = require('./adversarial')
+DATASET = require('./dataset')
+NN_UTILS = require('./utils/nn_utils')
+MODELS = require('./models')
 
 --torch.setdefaultdtype(torch.float32)
 torch.setdefaulttensortype('torch.FloatTensor')

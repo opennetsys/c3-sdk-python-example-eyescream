@@ -3,7 +3,7 @@ require 'torch'
 --require 'cunn'
 require 'optim'
 require 'pl'
-require 'interruptable_optimizers'
+require('./interruptable_optimizers')
 require 'image'
 
 math.randomseed(1)

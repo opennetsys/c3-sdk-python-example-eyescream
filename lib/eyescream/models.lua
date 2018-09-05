@@ -1,7 +1,7 @@
 require 'torch'
 require 'nn'
 require 'cudnn'
-require 'layers.cudnnSpatialConvolutionUpsample'
+require('./layers.cudnnSpatialConvolutionUpsample')
 
 function SpatialConvolution(nInputPlane, nOutputPlane,
   kW, kH, dW, dH, padW, padH, groups)

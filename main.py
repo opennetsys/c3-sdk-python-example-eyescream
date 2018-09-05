@@ -98,7 +98,7 @@ def acceptImage(img):
         print("invalid img", err)
         raise InvalidImage
 
-    img.save(inputAbsPath + os.path.sep + "input." + standardImgFormat, format=standardImgFormat)
+    img.save(inputAbsPath + os.path.sep + "input.jpg", format=standardImgFormat)
 
     # augment the input image and save it to disk
     gd.gen(inputAbsPath, augAbsPath, unaugAbsPath)
@@ -108,7 +108,12 @@ def acceptImage(img):
     #       but this code is for example purposes, only...
     result = None
     try:
-        result = subprocess.run(["th", scriptFileAbsPath, "--network", oldNetworkAbsPath, "--save", networkAbsPath])
+        cmd = ["th", scriptFileAbsPath]
+        if os.stat(oldNetworkAbsPath).st_size != 0:
+            cmd.extend(["--network", oldNetworkAbsPath])
+
+        cmd.extend(["--save", networkAbsPath, "--dataDir", augAbsPath])
+        result = subprocess.run(cmd)
 
     except Exception as err:
         print("subprocess errored", err)

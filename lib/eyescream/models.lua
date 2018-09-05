@@ -1,7 +1,7 @@
 require 'torch'
 require 'nn'
 require 'cudnn'
-require('./layers.cudnnSpatialConvolutionUpsample')
+require('./layers/cudnnSpatialConvolutionUpsample')
 
 function SpatialConvolution(nInputPlane, nOutputPlane,
   kW, kH, dW, dH, padW, padH, groups)
@@ -87,7 +87,7 @@ function models.create_G_decoder_upsampling32(dimensions, noiseDim)
     
     --model:add(nn.View(dimensions[1], dimensions[2], dimensions[3]))
 
-    model = require('weight-init')(model, 'heuristic')
+    model = require('./weight-init')(model, 'heuristic')
 
     return model
 end

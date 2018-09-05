@@ -1,6 +1,6 @@
 require 'torch'
 require 'nn'
-require 'layers.cudnnSpatialConvolutionUpsample'
+require('./layers/cudnnSpatialConvolutionUpsample')
 
 local models = {}
 

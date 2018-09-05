@@ -4,7 +4,7 @@ require 'cutorch'
 require 'cunn'
 require 'LeakyReLU'
 require 'dpnn'
-require 'layers.cudnnSpatialConvolutionUpsample'
+require('./layers./cudnnSpatialConvolutionUpsample')
 require 'stn'
 
 OPT = lapp[[

@@ -40,15 +40,15 @@ def gen(path, WRITE_AUG_TO, WRITE_UNAUG_TO):
                                 brightness_change=0.1, noise_mean=0.0, noise_std=0.00)
         faces = [image]
         faces.extend(augmentations)
-        
+
         for aug_idx, face in enumerate(faces):
             crop = face[CROP_UPPER_LEFT_CORNER_Y:CROP_LOWER_RIGHT_CORNER_Y+1,
                         CROP_UPPER_LEFT_CORNER_X:CROP_LOWER_RIGHT_CORNER_X+1,
                         ...]
-            
+
             #misc.imshow(face)
             #misc.imshow(crop)
-            
+
             filename = "{:0>6}_{:0>3}.jpg".format(img_idx, aug_idx)
             if WRITE_UNAUG and aug_idx == 0:
                 face_scaled = misc.imresize(crop, (SCALE, SCALE))

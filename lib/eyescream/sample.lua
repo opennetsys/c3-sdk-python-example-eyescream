@@ -2,7 +2,7 @@ require 'torch'
 require 'image'
 require 'paths'
 require 'pl'
-require 'layers.cudnnSpatialConvolutionUpsample'
+require('./layers/cudnnSpatialConvolutionUpsample')
 NN_UTILS = require 'utils.nn_utils'
 DATASET = require 'dataset'
 

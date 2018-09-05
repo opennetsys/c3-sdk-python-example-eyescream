@@ -51,6 +51,7 @@ OPT = lapp[[
   --denoise                                Whether to apply the denoiser trained with train_denoiser to the generated images
   --aws                                    Activate AWS settings
   --epochs           (default 1)           Number of epochs for which to train
+  --dataDir          (default "dataset/out_aug_64x64")
 ]]
 
 if OPT.scale ~= 16 and OPT.scale ~= 32 then
@@ -77,7 +78,7 @@ print('<torch> set nb of threads to ' .. torch.getnumthreads())
 require 'nn'
 require 'cutorch'
 require 'cunn'
-require 'layers.cudnnSpatialConvolutionUpsample'
+--require('./layers/cudnnSpatialConvolutionUpsample')
 if OPT.gpu then
     print("<trainer> starting gpu support...")
     require 'cutorch'
@@ -89,7 +90,7 @@ else
     require 'nn'
 end
 require 'dpnn'
-require 'LeakyReLU'
+require('./LeakyReLU')
 --torch.setdefaulttensortype('torch.FloatTensor')
 
 CLASSES = {"0", "1"} -- possible output of disciminator, used for confusion matrix
@@ -169,11 +170,13 @@ function main()
     -- get/create dataset
     ----------------------------------------------------------------------
     -- adjust dataset
-    if OPT.aws then
-        DATASET.setDirs({"/mnt/datasets/out_aug_64x64"})
-    else
-        DATASET.setDirs({"dataset/out_aug_64x64"})
-    end
+    --if OPT.aws then
+        --DATASET.setDirs({"/mnt/datasets/out_aug_64x64"})
+    --else
+        --DATASET.setDirs({"dataset/out_aug_64x64"})
+    --end
+    print("data dir is", OPT.dataDir)
+    DATASET.setDirs({OPT.dataDir})
     DATASET.setFileExtension("jpg")
     DATASET.setScale(OPT.scale)
     DATASET.setNbChannels(IMG_DIMENSIONS[1])
